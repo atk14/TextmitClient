@@ -1,6 +1,6 @@
 <?php
 if(!class_exists("Textmit")){ // nacteni textmit.php -> ocekavame, ze jsou definovany konstanty TEXTMI_*
-	throw new Exception("Class Textmit doesn't exist");
+	throw new Exception("Class 'Textmit' not found");
 }
 
 /**
