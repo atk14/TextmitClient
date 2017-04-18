@@ -1,5 +1,11 @@
 <?php
 // a mock model class
 class PageComponent {
-	function getId(){ return 123; }
+	var $id;
+
+	function __construct($id = 123){
+		$this->id = $id;
+	}
+
+	function getId(){ return $this->id; }
 }

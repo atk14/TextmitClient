@@ -43,6 +43,12 @@ defined("TEXTMIT_DEFAULT_DOCUMENT_TYPE") 	|| define("TEXTMIT_DEFAULT_DOCUMENT_TY
 class Textmit {
 
 	/**
+	 *	$article = Article::GetInstanceById(123);
+	 *
+	 *	$textmit->addDocument($article,"Text of the document");
+	 *
+	 *	// or
+	 *
 	 *	$textmit->addDocument("123","Text of the document");
 	 *	$textmit->addDocument("123",array(
 	 *		"type" => "article",
@@ -51,18 +57,31 @@ class Textmit {
 	 *	));
 	 */
 	function addDocument($id,$options = array()){
+		$_default_type = TEXTMIT_DEFAULT_DOCUMENT_TYPE;
+
+		if(is_object($id)){
+			$class_name = get_class($id);
+
+			// "PageComponent" -> "page_component"
+			$_default_type = preg_replace_callback('/([a-z0-9])([A-Z])/',function($matches){ return $matches[1]."_".strtolower($matches[2]); },$class_name);
+			$_default_type = strtolower($_default_type);
+
+			$id = $id->getId();
+		}
+
 		if(is_string($options)){
 			$options = array("c" => $options);
 		}
 
 		$options += array(
-			"type" => TEXTMIT_DEFAULT_DOCUMENT_TYPE,
+			"type" => $_default_type,
 			"language" => TEXTMIT_DEFAULT_LANGUAGE,
 			"date" => "", // e.g. "2015-08-13 11:01:00"
 			"a" => "",
 			"b" => "",
 			"c" => "",
 			"d" => "",
+			"meta_data" => "",
 		);
 
 		$options["id"] = $id;
@@ -154,7 +173,7 @@ class Textmit {
 
 	function _getApiDataFetcher(){
 		$adf = new ApiDataFetcher(TEXTMIT_API_BASE_URL,array(
-			"lang" => "cs", // the language of api messages, not the language of indexing document
+			"lang" => "cs", // the language of api messages, not the language of indexed documents
 		));
 		return $adf;
 	}
