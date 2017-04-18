@@ -1,5 +1,5 @@
 <?php
-if(!class_exists("Textmit")){ // nacteni textmit.php -> ocekavame, ze jsou definovany konstanty TEXTMI_*
+if(!class_exists("Textmit")){ // Ensures that TEXTMIT_* constants are defined (autoload)
 	throw new Exception("Class 'Textmit' not found");
 }
 
@@ -35,7 +35,25 @@ class FulltextData {
 	protected $d = "";
 	protected $meta_data = "";
 
+	/**
+	 * Constructor
+	 *
+	 *	$article = Article::GetInstanceById(123);
+	 *
+	 *	$fd = new FulltextData($article,"cs"); // or
+	 *	$fd = new FulltextData($article); // or
+	 *	$fd = new FulltextData("article","cs"); // or
+	 *	$fd = new FulltextData("article");
+	 */
 	function __construct($type = TEXTMIT_DEFAULT_DOCUMENT_TYPE, $language = TEXTMIT_DEFAULT_LANGUAGE){
+		if(is_object($type)){
+			$class_name = get_class($type);
+
+			// "PageComponent" -> "page_component"
+			$type = preg_replace_callback('/([a-z0-9])([A-Z])/',function($matches){ return $matches[1]."_".strtolower($matches[2]); },$class_name);
+			$type = strtolower($type);
+		}
+
 		$this->type = $type;
 		$this->language = $language;
 	}
@@ -66,6 +84,7 @@ class FulltextData {
 		}
 
 		$this->$weight .= " ".$text;
+		$this->$weight = ltrim($this->$weight);
 	}
 
 	function addHtml($text,$options = array()){

@@ -16,10 +16,28 @@ class TcFulltextData extends TcBase {
 			"language" => "cs",
 			"date" => "",
 			"a" => "",
-			"b" => " Article Title Example perex",
-			"c" => " Body, body, body",
+			"b" => "Article Title Example perex",
+			"c" => "Body, body, body",
 			"d" => "",
 			"meta_data" => "for_members for_testers",
+		),$ary);
+
+		//
+
+		$pc = new PageComponent();
+		$fd = new FulltextData($pc);
+		$fd->addText("Sample page content");
+
+		$ary = $fd->toArray();
+		$this->assertEquals(array (
+			"type" => "page_component",
+			"language" => "en", // TEXTMIT_DEFAULT_LANGUAGE
+			"date" => "",
+			"a" => "",
+			"b" => "",
+			"c" => "Sample page content",
+			"d" => "",
+			"meta_data" => "",
 		),$ary);
 	}
 }
