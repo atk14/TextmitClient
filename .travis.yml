@@ -13,4 +13,4 @@ before_install:
   - composer global require "phpunit/phpunit=4.8.*"
 
 script:
-  - cd test && wget -q -O /tmp/run_unit_tests https://raw.github.com/atk14/Atk14/master/src/scripts/run_unit_tests && php /tmp/run_unit_tests
+  - cd test && wget https://raw.github.com/atk14/Atk14/master/src/scripts/run_unit_tests && php run_unit_tests
