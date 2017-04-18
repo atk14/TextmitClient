@@ -4,6 +4,8 @@ class TcTextmit extends TcBase {
 	function test(){
 		$textmit = new Textmit();
 
+		// Textmit::addDocument()
+
 		$ret = $textmit->addDocument(123,"Sample text");
 		$params = $ret["params"];
 		$this->assertEquals("article",$params["type"]); // TEXTMIT_DEFAULT_DOCUMENT_TYPE
@@ -32,5 +34,24 @@ class TcTextmit extends TcBase {
 		$this->assertEquals("en",$params["language"]);
 		$this->assertEquals(222,$params["id"]);
 		$this->assertEquals("Page content",$params["c"]);
+
+		// Textmit::removeDocument()
+
+		$ret = $textmit->removeDocument(124);
+		$this->assertEquals("documents/destroy",$ret["action"]);
+		$params = $ret["params"];
+		$this->assertEquals("article",$params["type"]);
+		$this->assertEquals(124,$params["id"]);
+
+		$ret = $textmit->removeDocument(125,"attachment");
+		$params = $ret["params"];
+		$this->assertEquals("attachment",$params["type"]);
+		$this->assertEquals(125,$params["id"]);
+
+		$pc = new PageComponent(111);
+		$ret = $textmit->removeDocument($pc);
+		$params = $ret["params"];
+		$this->assertEquals("page_component",$params["type"]);
+		$this->assertEquals(111,$params["id"]);
 	}
 }

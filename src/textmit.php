@@ -57,17 +57,7 @@ class Textmit {
 	 *	));
 	 */
 	function addDocument($id,$options = array()){
-		$_default_type = TEXTMIT_DEFAULT_DOCUMENT_TYPE;
-
-		if(is_object($id)){
-			$class_name = get_class($id);
-
-			// "PageComponent" -> "page_component"
-			$_default_type = preg_replace_callback('/([a-z0-9])([A-Z])/',function($matches){ return $matches[1]."_".strtolower($matches[2]); },$class_name);
-			$_default_type = strtolower($_default_type);
-
-			$id = $id->getId();
-		}
+		list($_default_type,$id) = $this->_determineDocumentTypeAndId($id);
 
 		if(is_string($options)){
 			$options = array("c" => $options);
@@ -94,10 +84,18 @@ class Textmit {
 	}
 
 	/**
-	 * $textmit->removeDocument(123);
+	 *	$article = Article::GetInstanceById(123);
+	 *
+	 *	$textmit->removeDocument($article);
+	 *
+	 *	// or
+	 *
+	 *	$textmit->removeDocument(123,"article");
 	 */
 	function removeDocument($id,$type = null){
-		if(is_null($type)){ $type = TEXTMIT_DEFAULT_DOCUMENT_TYPE; }
+		list($_default_type,$id) = $this->_determineDocumentTypeAndId($id);
+
+		if(is_null($type)){ $type = $_default_type; }
 		$params = array(
 			"id" => $id,
 			"type" => $type,
@@ -186,5 +184,21 @@ class Textmit {
 			return "$stage@$hostname"; // DEVELOPMENT@asterix
 		}
 		return TEXTMIT_STAGE;
+	}
+
+	protected function _determineDocumentTypeAndId($id){
+		$type = TEXTMIT_DEFAULT_DOCUMENT_TYPE;
+
+		if(is_object($id)){
+			$class_name = get_class($id);
+
+			// "PageComponent" -> "page_component"
+			$type = preg_replace_callback('/([a-z0-9])([A-Z])/',function($matches){ return $matches[1]."_".strtolower($matches[2]); },$class_name);
+			$type = strtolower($type);
+
+			$id = $id->getId();
+		}
+
+		return array($type,$id);
 	}
 }
