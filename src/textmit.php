@@ -108,6 +108,24 @@ class Textmit {
 	}
 
 	/**
+	 * Remove documents added or updated before limit_date
+	 *
+	 * $textmit->removeObsoleteDocuments("2017-04-27 00:00:00");
+	 */
+	function removeObsoleteDocuments($limit_date = null){
+		if(!$limit_date){ $limit_date = date("Y-m-d H:i:s",time() - 60 * 60 * 24 * 30); } // a month
+
+		$params = array(
+			"stage" => $this->_getStage(),
+			"limit_date" => $limit_date,
+			"auth_token" => $this->_getAuthToken(),
+		);
+		$apf = $this->_getApiDataFetcher();
+		$data = $apf->post("obsolete_documents/bulk_destroy",$params);
+		return $data["documents_deleted"];
+	}
+
+	/**
 	 * $result = $textmit->search("vitamins and minerals"); // TextmitResult
 	 * $result = $textmit->search("vitamins and minerals",array("type" => "article"));
 	 */
