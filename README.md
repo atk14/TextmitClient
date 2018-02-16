@@ -12,28 +12,56 @@ In the configuration file set the TEXTMIT_API_KEY constant.
 
 Where do you get the TEXTMIT_API_KEY? Well at the moment the Textmit Engine is closed beta. So you need an invitation code in order to get the key. We are sorry.
 
-Indexing:
+### Indexing
 
     $textmit = new Textmit();
-    $textmit->addDocument(123,array(
-      //"type" => "document",
-      //"language" => "en",
+
+    $textmit->addDocument(123,[
+      "type" => "article",
+      "language" => "en",
       "a" => "The most relevant textual part",
-      "d" => "Less relevant textual part",
+      "d" => "More relevant textual part",
       "c" => "Textual part with the default relevance",
       "d" => "The least relevant textual part"
-    ));
+    ]);
 
-Searching:
+The same object can be indexed in different languages.
 
-    $result = $textmit->search("vitamins and minerals",array(
+    $textmit->addDocument(123,[
+      "type" => "article",
+      "language" => "cs",
+      "a" => "Nejvíce relevantní část textu",
+      "d" => "Více relevantní část textu",
+      "c" => "Textová část s výchozí relevancí",
+      "d" => "Nejméně relevantní část textu"
+    ]);
+
+### Searching
+
+Searching can be performed in one specific language.
+
+    $result = $textmit->search("vitamins and minerals",[
       "type" => "article",
       "language" => "en",
       "offset" => 0,
       "limit" => 20,
-    ));
-    echo $result->getTotalAmount();
-    print_r($result->getIds()); // array("123","124"...)
+    ]);
+    $records_found = $result->getTotalAmount();
+    print_r($result->getIds()); // ["123","124"...]
+
+More types of documents can be search at once.
+
+    $result = $textmit->search("vitamins and minerals",[
+      "language" => "cs",
+      "types" => ["article","page","image_gallery","video"],
+    ]);
+
+    foreach($result->getItems() as $item){
+      $id = $item->getId();
+      $type = $item->getType(); // "article", "page", "image_gallery" or "video'
+
+      $object = $item->getObject(); // Article#123, Page#332, ImageGallery#453...
+    }
 
 Installation
 ------------
@@ -41,7 +69,7 @@ Installation
 Use the Composer to install the Texmit Client.
 
     cd path/to/your/project/
-    composer require atk14/textmit-client dev-master
+    composer require atk14/textmit-client
 
 Licence
 -------
