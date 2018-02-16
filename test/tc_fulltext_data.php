@@ -2,7 +2,6 @@
 class TcFulltextData extends TcBase {
 
 	function test(){
-
 		$fd = new FulltextData("article","cs");
 
 		$fd->addText("Article Title","b");
@@ -12,6 +11,7 @@ class TcFulltextData extends TcBase {
 
 		$ary = $fd->toArray();
 		$this->assertEquals(array (
+			"id" => null,
 			"type" => "article",
 			"language" => "cs",
 			"date" => "",
@@ -30,6 +30,7 @@ class TcFulltextData extends TcBase {
 
 		$ary = $fd->toArray();
 		$this->assertEquals(array (
+			"id" => 123,
 			"type" => "page_component",
 			"language" => "en", // TEXTMIT_DEFAULT_LANGUAGE
 			"date" => "",

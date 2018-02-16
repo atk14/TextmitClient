@@ -42,10 +42,33 @@ defined("TEXTMIT_DEFAULT_DOCUMENT_TYPE") 	|| define("TEXTMIT_DEFAULT_DOCUMENT_TY
 
 class Textmit {
 
+	protected $api_data_fetcher = null;
+
+	function __construct($options = array()){
+		$options += array(
+			"api_data_fetcher" => null
+		);
+
+		$this->api_data_fetcher = $options["api_data_fetcher"];
+		if(is_null($this->api_data_fetcher)){
+			$this->api_data_fetcher = new ApiDataFetcher(TEXTMIT_API_BASE_URL,array(
+				"lang" => "en", // the language of api messages, not the language of indexed documents
+			));
+		}
+	}
+
 	/**
 	 *	$article = Article::GetInstanceById(123);
 	 *
 	 *	$textmit->addDocument($article,"Text of the document");
+	 *
+	 *	// or
+	 *
+	 *	$textmit->addDocument(array(
+	 *		"id" => "123",
+	 *		"type" => "article",
+	 *		"c" => "Text of the document"
+	 *	));
 	 *
 	 *	// or
 	 *
@@ -57,7 +80,16 @@ class Textmit {
 	 *	));
 	 */
 	function addDocument($id,$options = array()){
+		if(is_array($id)){
+			$options = $id;
+			$id = isset($options["id"]) ? $options["id"] : null;
+		}
+
 		list($_default_type,$id) = $this->_determineDocumentTypeAndId($id);
+
+		if(strlen($id)==0){
+			throw new Exception("Textmit::addDocument(): id is missing");
+		}
 
 		if(is_string($options)){
 			$options = array("c" => $options);
@@ -188,10 +220,7 @@ class Textmit {
 	}
 
 	function _getApiDataFetcher(){
-		$adf = new ApiDataFetcher(TEXTMIT_API_BASE_URL,array(
-			"lang" => "cs", // the language of api messages, not the language of indexed documents
-		));
-		return $adf;
+		return $this->api_data_fetcher;
 	}
 
 	function _getStage(){
@@ -208,12 +237,7 @@ class Textmit {
 		$type = TEXTMIT_DEFAULT_DOCUMENT_TYPE;
 
 		if(is_object($id)){
-			$class_name = get_class($id);
-
-			// "PageComponent" -> "page_component"
-			$type = preg_replace_callback('/([a-z0-9])([A-Z])/',function($matches){ return $matches[1]."_".strtolower($matches[2]); },$class_name);
-			$type = strtolower($type);
-
+			$type = String4::ToObject(get_class($id))->underscore()->toString(); // "PageComponent" -> "page_component"
 			$id = $id->getId();
 		}
 

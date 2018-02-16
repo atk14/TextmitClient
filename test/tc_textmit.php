@@ -13,6 +13,20 @@ class TcTextmit extends TcBase {
 		$this->assertEquals(123,$params["id"]);
 		$this->assertEquals("Sample text",$params["c"]);
 
+		// the same document, another way
+		$ret2 = $textmit->addDocument(array(
+			"id" => 123,
+			"c" => "Sample text",
+		));
+		$this->assertEquals($ret,$ret2);
+
+		$ret3 = $textmit->addDocument(array(
+			"id" => 124,
+			"c" => "Sample text",
+		));
+		$this->assertNotEquals($ret,$ret3);
+		$this->assertEquals(124,$ret3["params"]["id"]);
+
 		$ret = $textmit->addDocument(333,array(
 			"type" => "attachment",
 			"language" => "cs",
@@ -26,7 +40,6 @@ class TcTextmit extends TcBase {
 		$this->assertEquals("Title",$params["b"]);
 		$this->assertEquals("Attachment content",$params["c"]);
 
-
 		$pc = new PageComponent(222);
 		$ret = $textmit->addDocument($pc,"Page content");
 		$params = $ret["params"];
@@ -34,6 +47,15 @@ class TcTextmit extends TcBase {
 		$this->assertEquals("en",$params["language"]);
 		$this->assertEquals(222,$params["id"]);
 		$this->assertEquals("Page content",$params["c"]);
+
+		// id must be set
+
+		try {
+			$textmit->addDocument(array("id" => "", "c" => "Sample text"));
+			$this->fail();
+		}catch(Exception $e){
+			$this->assertContains("id is missing",$e->getMessage());
+		}
 
 		// Textmit::removeDocument()
 

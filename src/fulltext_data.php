@@ -26,6 +26,7 @@ if(!class_exists("Textmit")){ // Ensures that TEXTMIT_* constants are defined (a
  */
 class FulltextData {
 
+	protected $id = null;
 	protected $language = null;
 	protected $type = null;
 	protected $date = "";
@@ -47,11 +48,8 @@ class FulltextData {
 	 */
 	function __construct($type = TEXTMIT_DEFAULT_DOCUMENT_TYPE, $language = TEXTMIT_DEFAULT_LANGUAGE){
 		if(is_object($type)){
-			$class_name = get_class($type);
-
-			// "PageComponent" -> "page_component"
-			$type = preg_replace_callback('/([a-z0-9])([A-Z])/',function($matches){ return $matches[1]."_".strtolower($matches[2]); },$class_name);
-			$type = strtolower($type);
+			$this->id = $type->getId();
+			$type = String4::ToObject(get_class($type))->underscore()->toString(); // "PageComponent" -> "page_component"
 		}
 
 		$this->type = $type;
@@ -126,6 +124,7 @@ class FulltextData {
 
 	function toArray(){
 		return array(
+			"id" => $this->id,
 			"type" => $this->type,
 			"language" => $this->language,
 			"date" => $this->date,
