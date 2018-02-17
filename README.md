@@ -18,7 +18,7 @@ Where do you get the TEXTMIT_API_KEY? Well at the moment the Textmit Engine is c
 
     $textmit->addDocument([
       "type" => "article",
-			"id" => 123,
+      "id" => 123,
       "language" => "en",
       "a" => "The most relevant textual part",
       "d" => "More relevant textual part",
@@ -30,7 +30,7 @@ The same object can be indexed in different languages.
 
     $textmit->addDocument([
       "type" => "article",
-			"id" => 123,
+      "id" => 123,
       "language" => "cs",
       "a" => "Nejvíce relevantní část textu",
       "d" => "Více relevantní část textu",
