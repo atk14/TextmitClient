@@ -1,6 +1,11 @@
 <?php
-class TextmitResult{
+
+namespace Textmit;
+
+class SearchResult {
+
 	protected $data;
+
 	function __construct($data){
 		$this->data = $data;
 	}
@@ -32,7 +37,7 @@ class TextmitResult{
 	function getItems(){
 		$out = array();
 		foreach($this->data["records"] as $rec){
-			$item = new TextmitResultItem($rec);
+			$item = new \Textmit\ResultItem($rec);
 			$item->prepareCache();
 			$out[] = $item;
 		}
@@ -46,49 +51,5 @@ class TextmitResult{
 			$out[] = $item->getObject();
 		}
 		return $out;
-	}
-}
-
-class TextmitResultItem{
-	protected $data;
-	function __construct($data){
-		$this->data = $data;
-	}
-
-	function getId(){
-		return $this->data["id"];
-	}
-
-	/**
-	 * echo $item->getType(); // "article", "static_page"...
-	 */
-	function getType(){
-		return $this->data["type"];
-	}
-
-	function getRank(){
-		return $this->data["rank"];
-	}
-
-	/**
-	 * TODO: Nevim, jestli je to takto ok...
-	 */
-	function getObject(){
-		$class_name = $this->_getObjectClassName();
-		if(class_exists($class_name)){
-			return Cache::Get($class_name,$this->getId());
-		}
-	}
-
-	function prepareCache(){
-		$class_name = $this->_getObjectClassName();
-		if(class_exists($class_name)){
-			return Cache::Prepare($class_name,$this->getId());
-		}
-	}
-
-	function _getObjectClassName(){
-		$class_name = String4::ToObject($this->getType())->camelize()->toString(); // "static_page" -> "StaticPage"
-		return $class_name;
 	}
 }

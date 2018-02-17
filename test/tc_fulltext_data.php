@@ -2,7 +2,7 @@
 class TcFulltextData extends TcBase {
 
 	function test(){
-		$fd = new FulltextData("article","cs");
+		$fd = new \Textmit\FulltextData("article","cs");
 
 		$fd->addText("Article Title","b");
 		$fd->addText("Example perex","b");
@@ -25,7 +25,7 @@ class TcFulltextData extends TcBase {
 		//
 
 		$pc = new PageComponent();
-		$fd = new FulltextData($pc);
+		$fd = new \Textmit\FulltextData($pc);
 		$fd->addText("Sample page content");
 
 		$ary = $fd->toArray();

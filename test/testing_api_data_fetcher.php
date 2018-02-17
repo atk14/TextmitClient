@@ -1,6 +1,6 @@
 <?php
 // This is a *testing* ApiDataFetcher
-class ApiDataFetcher {
+class TestingApiDataFetcher {
 
 	var $api_base_url = "";
 	var $init_options = array();

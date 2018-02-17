@@ -1,6 +1,9 @@
 <?php
-if(!class_exists("Textmit")){ // Ensures that TEXTMIT_* constants are defined (autoload)
-	throw new Exception("Class 'Textmit' not found");
+
+namespace Textmit;
+
+if(!class_exists("\Textmit\Client")){ // Ensures that TEXTMIT_* constants are defined (autoload)
+	throw new Exception("Class '\Textmit\Client' not found");
 }
 
 /**
@@ -49,7 +52,7 @@ class FulltextData {
 	function __construct($type = TEXTMIT_DEFAULT_DOCUMENT_TYPE, $language = TEXTMIT_DEFAULT_LANGUAGE){
 		if(is_object($type)){
 			$this->id = $type->getId();
-			$type = String4::ToObject(get_class($type))->underscore()->toString(); // "PageComponent" -> "page_component"
+			$type = \String4::ToObject(get_class($type))->underscore()->toString(); // "PageComponent" -> "page_component"
 		}
 
 		$this->type = $type;

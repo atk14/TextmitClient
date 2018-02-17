@@ -14,7 +14,7 @@ Where do you get the TEXTMIT_API_KEY? Well at the moment the Textmit Engine is c
 
 ### Indexing
 
-    $textmit = new Textmit();
+    $textmit = new \Textmit\Client();
 
     $textmit->addDocument([
       "type" => "article",
@@ -48,7 +48,7 @@ For easing process of fulltext data preparation, class FulltextData can be used.
 
     $article = Article::GetInstanceById(333);
 
-    $fd_article = new FulltextData($article);
+    $fd_article = new \Textmit\FulltextData($article);
     $fd_article->addHtml($article->getBody());
     $fd_article->addText($addText->getTitle(),"a");
     $fd_article->setDate($article->getPublishedAt()); // "2018-02-17 06:00:00"

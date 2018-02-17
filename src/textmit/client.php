@@ -1,4 +1,7 @@
 <?php
+
+namespace Textmit;
+
 /**
  * A client for Textmit - the Indexing Service
  *
@@ -41,7 +44,7 @@ defined("TEXTMIT_DEFAULT_DOCUMENT_TYPE") 	|| define("TEXTMIT_DEFAULT_DOCUMENT_TY
 defined("TEXTMIT_STAGE") 									|| define("TEXTMIT_STAGE","auto"); // "auto", "PRODUCTION", "DEVELOPMENT@asterix"
 defined("TEXTMIT_API_BASE_URL") 					|| define("TEXTMIT_API_BASE_URL","http://www.textmit.com/api/");
 
-class Textmit {
+class Client {
 
 	protected $api_data_fetcher = null;
 
@@ -52,7 +55,7 @@ class Textmit {
 
 		$this->api_data_fetcher = $options["api_data_fetcher"];
 		if(is_null($this->api_data_fetcher)){
-			$this->api_data_fetcher = new ApiDataFetcher(TEXTMIT_API_BASE_URL,array(
+			$this->api_data_fetcher = new \ApiDataFetcher(TEXTMIT_API_BASE_URL,array(
 				"lang" => "en", // the language of api messages, not the language of indexed documents
 			));
 		}
@@ -96,7 +99,7 @@ class Textmit {
 		list($_default_type,$id) = $this->_determineDocumentTypeAndId($id);
 
 		if(strlen($id)==0){
-			throw new Exception("Textmit::addDocument(): id is missing");
+			throw new \Exception("Textmit::addDocument(): id is missing");
 		}
 
 		if(is_string($options)){
@@ -194,7 +197,7 @@ class Textmit {
 
 		$apf = $this->_getApiDataFetcher();
 		$data = $apf->get("documents/search",$params);
-		return new TextmitResult($data);
+		return new SearchResult($data);
 	}
 
 	function getStage(){ return $this->_getStage(); }
@@ -253,7 +256,7 @@ class Textmit {
 		$type = TEXTMIT_DEFAULT_DOCUMENT_TYPE;
 
 		if(is_object($id)){
-			$type = String4::ToObject(get_class($id))->underscore()->toString(); // "PageComponent" -> "page_component"
+			$type = \String4::ToObject(get_class($id))->underscore()->toString(); // "PageComponent" -> "page_component"
 			$id = $id->getId();
 		}
 

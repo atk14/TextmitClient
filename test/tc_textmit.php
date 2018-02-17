@@ -2,9 +2,11 @@
 class TcTextmit extends TcBase {
 
 	function test(){
-		$textmit = new Textmit();
+		$textmit = new \Textmit\Client(array(
+			"api_data_fetcher" => new TestingApiDataFetcher(TEXTMIT_API_BASE_URL)
+		));
 
-		// Textmit::addDocument()
+		// \Textmit\Client::addDocument()
 
 		$ret = $textmit->addDocument(123,"Sample text");
 		$params = $ret["params"];
@@ -58,7 +60,7 @@ class TcTextmit extends TcBase {
 
 		// using FulltextData
 		$pc = new PageComponent(444);
-		$fd = new FulltextData($pc,"sk");
+		$fd = new \Textmit\FulltextData($pc,"sk");
 		$fd->addText("Lorem Ipsum");
 		$fd->addText("dolor sit amet");;
 		$ret = $textmit->addDocument($fd->toArray());
@@ -68,7 +70,7 @@ class TcTextmit extends TcBase {
 		$this->assertEquals("sk",$params["language"]);
 		$this->assertEquals(444,$params["id"]);
 
-		// Textmit::removeDocument()
+		// \Textmit\Client::removeDocument()
 
 		$ret = $textmit->removeDocument(124);
 		$this->assertEquals("documents/destroy",$ret["action"]);
