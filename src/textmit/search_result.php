@@ -37,7 +37,7 @@ class SearchResult {
 	function getItems(){
 		$out = array();
 		foreach($this->data["records"] as $rec){
-			$item = new \Textmit\ResultItem($rec);
+			$item = new \Textmit\SearchResultItem($rec);
 			$item->prepareCache();
 			$out[] = $item;
 		}
