@@ -26,7 +26,7 @@ Where do you get the TEXTMIT_API_KEY? Well at the moment the Textmit Engine is c
       "d" => "The least relevant textual part"
     ]);
 
-The same object can be indexed in different languages.
+The same object can be indexed in a different language.
 
     $textmit->addDocument([
       "type" => "article",
@@ -41,6 +41,26 @@ The same object can be indexed in different languages.
 Here is the shortest way how to add a document to the fulltext index. Text is weighted as "c". Default language is used.
 
     $text->addDocument($article,"Lorem Ipsum");
+
+### Preparing fulltext data
+
+For easing process of fulltext data preparation, class FulltextData can be used.
+
+		$article = Article::GetInstanceById(333);
+
+		$fd_article = new FulltextData($article);
+		$fd_article->addHtml($article->getBody());
+		$fd_article->addText($addText->getTitle(),"a");
+		$fd_article->setDate($article->getPublishedAt()); // "2018-02-17 06:00:00"
+
+		$textmit->addDocument($fd_article->toArray());
+
+FulltextData has method merge() for merging other FulltextData object, e.g. one can merge FulltextData of an Image into FulltextData of an Article. During merging, text weights of the merging object can be changed (typically lowered).
+
+		$fd_article->merge($fd_image,[
+			"a" => "c",
+			"b" => "c"
+		]);
 
 ### Searching
 

@@ -49,13 +49,24 @@ class TcTextmit extends TcBase {
 		$this->assertEquals("Page content",$params["c"]);
 
 		// id must be set
-
 		try {
 			$textmit->addDocument(array("id" => "", "c" => "Sample text"));
 			$this->fail();
 		}catch(Exception $e){
 			$this->assertContains("id is missing",$e->getMessage());
 		}
+
+		// using FulltextData
+		$pc = new PageComponent(444);
+		$fd = new FulltextData($pc,"sk");
+		$fd->addText("Lorem Ipsum");
+		$fd->addText("dolor sit amet");;
+		$ret = $textmit->addDocument($fd->toArray());
+		$params = $ret["params"];
+		$this->assertEquals("Lorem Ipsum dolor sit amet",$params["c"]);
+		$this->assertEquals("page_component",$params["type"]);
+		$this->assertEquals("sk",$params["language"]);
+		$this->assertEquals(444,$params["id"]);
 
 		// Textmit::removeDocument()
 
