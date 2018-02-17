@@ -14,31 +14,32 @@
  *	//define("TEXTMIT_STAGE","auto");
  *
  *	$textmit = new Textmit();
- *	$textmit->addDocument(123,array(
- *		//"type" => "document",
- *		//"language" => "en",
+ *	$textmit->addDocument([
+ *		"type" => "article",
+ *		"id" => 123,
+ *		"language" => "en",
  *		"a" => "The most relevant textual part",
  *		"d" => "Less relevant textual part",
  *		"c" => "Textual part with the default relevance",
  *		"d" => "The least relevant textual part"
- *	));
+ *	]);
  *
- *	$result = $textmit->search("vitamins and minerals",array(
+ *	$result = $textmit->search("vitamins and minerals",[
  *		"type" => "article",
  *		"language" => "en",
  *		"offset" => 0,
  *		"limit" => 20,
- *	));
+ *	]);
  *	echo $result->getTotalAmount();
- *	print_r($result->getIds()); // array("123","124"...)
- *	
+ *	print_r($result->getIds()); // ["123","124"...]
+ *
  */
 
 defined("TEXTMIT_API_KEY") 								|| define("TEXTMIT_API_KEY","some_secret_key");
 defined("TEXTMIT_DEFAULT_LANGUAGE") 			|| define("TEXTMIT_DEFAULT_LANGUAGE","cs"); // "cs", "en"
+defined("TEXTMIT_DEFAULT_DOCUMENT_TYPE") 	|| define("TEXTMIT_DEFAULT_DOCUMENT_TYPE","article");
 defined("TEXTMIT_STAGE") 									|| define("TEXTMIT_STAGE","auto"); // "auto", "PRODUCTION", "DEVELOPMENT@asterix"
 defined("TEXTMIT_API_BASE_URL") 					|| define("TEXTMIT_API_BASE_URL","http://www.textmit.com/api/");
-defined("TEXTMIT_DEFAULT_DOCUMENT_TYPE") 	|| define("TEXTMIT_DEFAULT_DOCUMENT_TYPE","article");
 
 class Textmit {
 
@@ -58,31 +59,38 @@ class Textmit {
 	}
 
 	/**
+	 * Adds document to the fulltext index
+	 *
 	 *	$article = Article::GetInstanceById(123);
 	 *
-	 *	$textmit->addDocument($article,"Text of the document");
-	 *
-	 *	// or
-	 *
 	 *	$textmit->addDocument(array(
-	 *		"id" => "123",
 	 *		"type" => "article",
+	 *		"id" => $article->getId(),
 	 *		"c" => "Text of the document"
 	 *	));
 	 *
 	 *	// or
 	 *
-	 *	$textmit->addDocument("123","Text of the document");
-	 *	$textmit->addDocument("123",array(
+	 *	$textmit->addDocument($article,"Text of the document");
+	 *
+	 *	// or
+	 *
+	 *	$textmit->addDocument($article->getId(),array(
 	 *		"type" => "article",
 	 *		"a" => "The most relevant relevant textual part",
 	 *		"c" => "The rest of the documents text"
 	 *	));
+	 *
+	 *	// or
+	 *
+	 *	$textmit->addDocument("123","Text of the document"); // This will work when the TEXTMIT_DEFAULT_DOCUMENT_TYPE is defined as article
 	 */
-	function addDocument($id,$options = array()){
-		if(is_array($id)){
-			$options = $id;
+	function addDocument($id_or_options,$options = array()){
+		if(is_array($id_or_options)){
+			$options = $id_or_options;
 			$id = isset($options["id"]) ? $options["id"] : null;
+		}else{
+			$id = $id_or_options;
 		}
 
 		list($_default_type,$id) = $this->_determineDocumentTypeAndId($id);
@@ -116,6 +124,8 @@ class Textmit {
 	}
 
 	/**
+	 * Removes the given document from the fulltext index
+	 * 
 	 *	$article = Article::GetInstanceById(123);
 	 *
 	 *	$textmit->removeDocument($article);
@@ -140,9 +150,9 @@ class Textmit {
 	}
 
 	/**
-	 * Remove documents added or updated before limit_date
+	 * Removes documents added or updated before limit_date
 	 *
-	 * $textmit->removeObsoleteDocuments("2017-04-27 00:00:00");
+	 *	$textmit->removeObsoleteDocuments("2017-04-27 00:00:00");
 	 */
 	function removeObsoleteDocuments($limit_date = null){
 		if(!$limit_date){ $limit_date = date("Y-m-d H:i:s",time() - 60 * 60 * 24 * 30); } // a month
@@ -158,8 +168,10 @@ class Textmit {
 	}
 
 	/**
-	 * $result = $textmit->search("vitamins and minerals"); // TextmitResult
-	 * $result = $textmit->search("vitamins and minerals",array("type" => "article"));
+	 * Performs searching in the fulltext index
+	 *
+	 *	$result = $textmit->search("vitamins and minerals"); // TextmitResult
+	 *	$result = $textmit->search("vitamins and minerals",array("type" => "article"));
 	 */
 	function search($query,$params = array()){
 		$params += array(
@@ -188,8 +200,10 @@ class Textmit {
 	function getStage(){ return $this->_getStage(); }
 
 	/**
-	 * $stages = $textmit->listStages();
-	 * print_r($stages);
+	 * Lists all stages
+	 *
+	 *	$stages = $textmit->listStages();
+	 *	print_r($stages);
 	 */
 	function listStages(){
 		$apf = $this->_getApiDataFetcher();
@@ -199,8 +213,10 @@ class Textmit {
 	}
 
 	/**
-	 * $textmit->destroyStage(); // it destroys the current stage
-	 * $textmit->destroyStage("DEVELOPMENT@prcek");
+	 * Deletes all documents in the given stage
+	 *
+	 *	$textmit->destroyStage(); // it destroys the current stage
+	 *	$textmit->destroyStage("DEVELOPMENT@prcek");
 	 */
 	function destroyStage($name = null){
 		if(!isset($name)){ $name = $this->_getStage(); }
@@ -211,7 +227,7 @@ class Textmit {
 		));
 	}
 
-	function _getAuthToken(){
+	protected function _getAuthToken(){
 		$time = time();
 		$t = $time - ($time % (60 * 10)); // new auth_token every 10 minutes
 		$ar = explode(".",TEXTMIT_API_KEY);
@@ -219,11 +235,11 @@ class Textmit {
 		return $id.".".hash("sha256",TEXTMIT_API_KEY.$t);
 	}
 
-	function _getApiDataFetcher(){
+	protected function _getApiDataFetcher(){
 		return $this->api_data_fetcher;
 	}
 
-	function _getStage(){
+	protected function _getStage(){
 		if(TEXTMIT_STAGE=="auto"){
 			if(PRODUCTION){ return "PRODUCTION"; }
 			$stage = DEVELOPMENT ? "DEVELOPMENT" : "TEST";

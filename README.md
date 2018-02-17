@@ -16,8 +16,9 @@ Where do you get the TEXTMIT_API_KEY? Well at the moment the Textmit Engine is c
 
     $textmit = new Textmit();
 
-    $textmit->addDocument(123,[
+    $textmit->addDocument([
       "type" => "article",
+			"id" => 123,
       "language" => "en",
       "a" => "The most relevant textual part",
       "d" => "More relevant textual part",
@@ -27,14 +28,19 @@ Where do you get the TEXTMIT_API_KEY? Well at the moment the Textmit Engine is c
 
 The same object can be indexed in different languages.
 
-    $textmit->addDocument(123,[
+    $textmit->addDocument([
       "type" => "article",
+			"id" => 123,
       "language" => "cs",
       "a" => "Nejvíce relevantní část textu",
       "d" => "Více relevantní část textu",
       "c" => "Textová část s výchozí relevancí",
       "d" => "Nejméně relevantní část textu"
     ]);
+
+Here is the shortest way how to add a document to the fulltext index. Text is weighted as "c". Default language is used.
+
+    $text->addDocument($article,"Lorem Ipsum");
 
 ### Searching
 
@@ -49,7 +55,7 @@ Searching can be performed in one specific language.
     $records_found = $result->getTotalAmount();
     print_r($result->getIds()); // ["123","124"...]
 
-More types of documents can be search at once.
+More types of document can be searched at once.
 
     $result = $textmit->search("vitamins and minerals",[
       "language" => "cs",
@@ -62,6 +68,16 @@ More types of documents can be search at once.
 
       $object = $item->getObject(); // Article#123, Page#332, ImageGallery#453...
     }
+
+### Configuration
+
+There are several configuration constants.
+
+    define("TEXTMIT_API_KEY","...");
+    define("TEXTMIT_DEFAULT_LANGUAGE","en"); // "en", "cs"
+    define("TEXTMIT_DEFAULT_DOCUMENT_TYPE","article");
+    define("TEXTMIT_STAGE","auto"); // "auto" means auto detection
+    define("TEXTMIT_API_BASE_URL","http://www.textmit.com/api/"); // This is default base url
 
 Installation
 ------------
