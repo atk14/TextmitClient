@@ -12,7 +12,7 @@ if(!class_exists("\Textmit\Client")){ // Ensures that TEXTMIT_* constants are de
  *		// ...
  *
  *		function getFulltextData() {
- *			$fd = new FulltextData("article","cs");
+ *			$fd = new \Textmit\FulltextData("article","cs");
  *			$fd->addText($article->getTitle(),"b");
  *			$fd->addText($article->getPerex(),"b");
  *			$fd->addHtml($article->geBody()); // default weight is "c"
@@ -24,7 +24,7 @@ if(!class_exists("\Textmit\Client")){ // Ensures that TEXTMIT_* constants are de
  *
  *	}
  *
- *  $textmit = new Textmit();
+ *  $textmit = new \Textmit\Client();
  *	$textmit->addDocument($article->getId(),$fd->toArray());
  */
 class FulltextData {
@@ -44,10 +44,10 @@ class FulltextData {
 	 *
 	 *	$article = Article::GetInstanceById(123);
 	 *
-	 *	$fd = new FulltextData($article,"cs"); // or
-	 *	$fd = new FulltextData($article); // or
-	 *	$fd = new FulltextData("article","cs"); // or
-	 *	$fd = new FulltextData("article");
+	 *	$fd = new \Textmit\FulltextData($article,"cs"); // or
+	 *	$fd = new \Textmit\FulltextData($article); // or
+	 *	$fd = new \Textmit\FulltextData("article","cs"); // or
+	 *	$fd = new \Textmit\FulltextData("article");
 	 */
 	function __construct($type = TEXTMIT_DEFAULT_DOCUMENT_TYPE, $language = TEXTMIT_DEFAULT_LANGUAGE){
 		if(is_object($type)){

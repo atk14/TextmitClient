@@ -16,7 +16,7 @@ namespace Textmit;
  *	//define("TEXTMIT_STAGE","DEVELOPMENT@eniac-22");
  *	//define("TEXTMIT_STAGE","auto");
  *
- *	$textmit = new Textmit();
+ *	$textmit = new \Textmit\Client();
  *	$textmit->addDocument([
  *		"type" => "article",
  *		"id" => 123,
