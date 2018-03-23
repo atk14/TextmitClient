@@ -96,7 +96,7 @@ There are several configuration constants.
     define("TEXTMIT_API_KEY","...");
     define("TEXTMIT_DEFAULT_LANGUAGE","en"); // "en", "cs"
     define("TEXTMIT_DEFAULT_DOCUMENT_TYPE","article");
-    define("TEXTMIT_STAGE","auto"); // "auto" means auto detection
+    define("TEXTMIT_STAGE","auto"); // "DEVELOPMENT", "PRODUCTION", "auto" means auto detection - it leads to "PRODUCTION", "DEVELOPMENT@hostname" or "TEST@hostname"
     define("TEXTMIT_API_BASE_URL","http://www.textmit.com/api/"); // This is default base url
 
 Installation
