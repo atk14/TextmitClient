@@ -3,6 +3,12 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.1] - 2018-03-23
+------------------
+
+### Added
+- Added Textmit\Panel for integration into the popular debugger Tracy
+
 [1.0] - 2018-02-17
 ------------------
 
