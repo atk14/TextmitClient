@@ -99,6 +99,13 @@ There are several configuration constants.
     define("TEXTMIT_STAGE","auto"); // "DEVELOPMENT", "PRODUCTION", "auto" means auto detection - it leads to "PRODUCTION", "DEVELOPMENT@hostname" or "TEST@hostname"
     define("TEXTMIT_API_BASE_URL","http://www.textmit.com/api/"); // This is default base url
 
+### Tracy panel integration
+
+The Textmit package comes with Panel for easy integration into a popular debugger Tracy (https://packagist.org/packages/tracy/tracy)
+
+    $tracy_bar = Tracy\Debugger::getBar();
+    $tracy_bar->addPanel(new Textmit\Panel());
+
 Installation
 ------------
 

@@ -121,7 +121,7 @@ class Client {
 		$options["stage"] = $this->_getStage();
 		$options["auth_token"] = $this->_getAuthToken();
 
-		$apf = $this->_getApiDataFetcher();
+		$apf = $this->getApiDataFetcher();
 		$data = $apf->post("documents/create_new",$options);
 		return $data;
 	}
@@ -147,7 +147,7 @@ class Client {
 			"stage" => $this->_getStage(),
 			"auth_token" => $this->_getAuthToken(),
 		);
-		$apf = $this->_getApiDataFetcher();
+		$apf = $this->getApiDataFetcher();
 		$data = $apf->post("documents/destroy",$params);
 		return $data;
 	}
@@ -165,7 +165,7 @@ class Client {
 			"limit_date" => $limit_date,
 			"auth_token" => $this->_getAuthToken(),
 		);
-		$apf = $this->_getApiDataFetcher();
+		$apf = $this->getApiDataFetcher();
 		$data = $apf->post("obsolete_documents/bulk_destroy",$params);
 		return $data["documents_deleted"];
 	}
@@ -195,7 +195,7 @@ class Client {
 		$params["types"] = join("\n",$params["types"]);
 		$params["query"] = $query;
 
-		$apf = $this->_getApiDataFetcher();
+		$apf = $this->getApiDataFetcher();
 		$data = $apf->get("documents/search",$params);
 		return new SearchResult($data);
 	}
@@ -209,7 +209,7 @@ class Client {
 	 *	print_r($stages);
 	 */
 	function listStages(){
-		$apf = $this->_getApiDataFetcher();
+		$apf = $this->getApiDataFetcher();
 		return $apf->get("stages/index",array(
 			"auth_token" => $this->_getAuthToken(),
 		));
@@ -223,11 +223,15 @@ class Client {
 	 */
 	function destroyStage($name = null){
 		if(!isset($name)){ $name = $this->_getStage(); }
-		$apf = $this->_getApiDataFetcher();
+		$apf = $this->getApiDataFetcher();
 		return $apf->post("stages/destroy",array(
 			"stage" => $name,
 			"auth_token" => $this->_getAuthToken(),
 		));
+	}
+
+	function getApiDataFetcher(){
+		return $this->api_data_fetcher;
 	}
 
 	protected function _getAuthToken(){
@@ -236,10 +240,6 @@ class Client {
 		$ar = explode(".",TEXTMIT_API_KEY);
 		$id = (int)$ar[0];
 		return $id.".".hash("sha256",TEXTMIT_API_KEY.$t);
-	}
-
-	protected function _getApiDataFetcher(){
-		return $this->api_data_fetcher;
 	}
 
 	protected function _getStage(){
