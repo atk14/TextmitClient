@@ -234,6 +234,15 @@ class Client {
 		return $this->api_data_fetcher;
 	}
 
+	/**
+	 * Returns current valid auth token
+	 *
+	 *	echo $textmit->getAuthToken(); // e.g. "10.f2cd5ec9038eda62de5565e6134459e1a57a0d8841264d81b7050ef4841c215b"
+	 */
+	function getAuthToken(){
+		return $this->_getAuthToken();
+	}
+
 	protected function _getAuthToken(){
 		$time = time();
 		$t = $time - ($time % (60 * 10)); // new auth_token every 10 minutes
