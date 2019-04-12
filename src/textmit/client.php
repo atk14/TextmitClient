@@ -87,8 +87,17 @@ class Client {
 	 *	// or
 	 *
 	 *	$textmit->addDocument("123","Text of the document"); // This will work when the TEXTMIT_DEFAULT_DOCUMENT_TYPE is defined as article
+	 *
+	 *  // or the preferred method with FulltextData
+	 *
+	 *	$fulltext_data = $article->getFulltextData(); // See FulltextData for more information
+	 *	$textmit->addDocument($fulltext_data->toArray());
 	 */
 	function addDocument($id_or_options,$options = array()){
+		if(is_a($id_or_options,"\Textmit\FulltextData")){
+			$id_or_options = $id_or_options->toArray();
+		}
+
 		if(is_array($id_or_options)){
 			$options = $id_or_options;
 			$id = isset($options["id"]) ? $options["id"] : null;
