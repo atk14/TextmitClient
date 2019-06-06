@@ -3,8 +3,7 @@ Textmit Client
 
 This is a client for indexing and searching engine [Texmit.com](http://www.textmit.com/). The client is written in PHP. It can be very easily integrated into an ATK14 application. 
 
-1. Basic usage
---------------
+## 1. Basic usage
 
 In the configuration file set the TEXTMIT_API_KEY constant.
 
@@ -106,16 +105,14 @@ The Textmit package comes with Panel for easy integration into a popular debugge
     $tracy_bar = Tracy\Debugger::getBar();
     $tracy_bar->addPanel(new Textmit\Panel());
 
-2. Installation
----------------
+## 2. Installation
 
 Use the Composer to install the Texmit Client.
 
     cd path/to/your/project/
     composer require atk14/textmit-client
 
-3. Extended integration into an ATK14 project
----------------------------------------------
+## 3. Extended integration into an ATK14 project
 
 ### 3.1 Using Indexable interface in searchable models
 
@@ -195,7 +192,6 @@ Use the Composer to install the Texmit Client.
     }
 
 
-4. Licence
-----------
+## Licence
 
 Files is free software distributed [under the terms of the MIT license](http://www.opensource.org/licenses/mit-license)
