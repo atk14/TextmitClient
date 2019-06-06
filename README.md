@@ -192,6 +192,6 @@ Use the Composer to install the Texmit Client.
     }
 
 
-## Licence
+## 4. Licence
 
-Files is free software distributed [under the terms of the MIT license](http://www.opensource.org/licenses/mit-license)
+Textmit Client is free software distributed [under the terms of the MIT license](http://www.opensource.org/licenses/mit-license)
