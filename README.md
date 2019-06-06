@@ -118,7 +118,9 @@ Use the Composer to install the Texmit Client.
 
     <?php
     // file: app/models/article.php
-    class Article extends ApplicationModel implements \Textmit\Indexable {
+    class Article extends ApplicationModel implements Translatable, \Textmit\Indexable {
+
+			static function GetTranslatableFields() { return array("title", "teaser", "body");}
 
       function isPublished(){
         return strtotime($this->getPublishedAt())<time();
@@ -128,10 +130,11 @@ Use the Composer to install the Texmit Client.
         return $this->isPublished();
       }
 
-      function getFulltextData(){
+      function getFulltextData($lang){
         $fd = new \Textmit\FulltextData($this);
-        $fd->addText($this->getTitle(),"a");
-        $fd->addHtml($this->getBody());
+        $fd->addText($this->getTitle($lang),"a");
+        $fd->addHtml($this->getTeaser($lang),"b");
+        $fd->addHtml($this->getBody($lang)); // default is section "c" 
         $fd->setDate($this->getPublishedAt());
 
         return $fd;
