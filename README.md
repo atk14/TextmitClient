@@ -120,7 +120,7 @@ Use the Composer to install the Texmit Client.
     // file: app/models/article.php
     class Article extends ApplicationModel implements Translatable, \Textmit\Indexable {
 
-			static function GetTranslatableFields() { return array("title", "teaser", "body");}
+      static function GetTranslatableFields() { return array("title", "teaser", "body"); }
 
       function isPublished(){
         return strtotime($this->getPublishedAt())<time();
@@ -198,3 +198,5 @@ Use the Composer to install the Texmit Client.
 ## 4. Licence
 
 Textmit Client is free software distributed [under the terms of the MIT license](http://www.opensource.org/licenses/mit-license)
+
+[//]: # ( vim: set ts=2 et: )
