@@ -3,6 +3,13 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.2] - 2019-06-08
+------------------
+
+- Added interface Textmit\Indexable
+- Textmit\FulltextData object can be passed to the Textmit\Client::addDocument()
+- Added public method Textmit\Client::getAuthToken()
+
 [1.1] - 2018-03-23
 ------------------
 

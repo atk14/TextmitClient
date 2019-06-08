@@ -46,7 +46,7 @@ defined("TEXTMIT_API_BASE_URL") 					|| define("TEXTMIT_API_BASE_URL","http://ww
 
 class Client {
 
-	const VERSION = "1.1";
+	const VERSION = "1.2";
 
 	protected $api_data_fetcher = null;
 
