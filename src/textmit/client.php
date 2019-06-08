@@ -59,6 +59,7 @@ class Client {
 		if(is_null($this->api_data_fetcher)){
 			$this->api_data_fetcher = new \ApiDataFetcher(TEXTMIT_API_BASE_URL,array(
 				"lang" => "en", // the language of api messages, not the language of indexed documents
+				"user_agent" => sprintf("TextmitClient/%s ApiDataFetcher/%s UrlFetcher/%s",self::VERSION,\ApiDataFetcher::VERSION,\UrlFetcher::VERSION),
 			));
 		}
 	}
