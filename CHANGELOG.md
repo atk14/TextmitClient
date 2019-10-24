@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.2.1] - 2019-10-24
+--------------------
+
+- Address to the server updated: http://www.textmit.com/ -> https://www.textmit.com/
+
 [1.2] - 2019-06-08
 ------------------
 
