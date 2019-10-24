@@ -1,7 +1,7 @@
 Textmit Client
 ==============
 
-This is a client for indexing and searching engine [Texmit.com](http://www.textmit.com/). The client is written in PHP. It can be very easily integrated into an ATK14 application. 
+This is a client for indexing and searching engine [Texmit.com](https://www.textmit.com/). The client is written in PHP. It can be very easily integrated into an ATK14 application. 
 
 ## 1. Basic usage
 
@@ -96,7 +96,7 @@ There are several configuration constants.
     define("TEXTMIT_DEFAULT_LANGUAGE","en"); // "en", "cs"
     define("TEXTMIT_DEFAULT_DOCUMENT_TYPE","article");
     define("TEXTMIT_STAGE","auto"); // "DEVELOPMENT", "PRODUCTION", "auto" means auto detection - it leads to "PRODUCTION", "DEVELOPMENT@hostname" or "TEST@hostname"
-    define("TEXTMIT_API_BASE_URL","http://www.textmit.com/api/"); // This is default base url
+    define("TEXTMIT_API_BASE_URL","https://www.textmit.com/api/"); // This is default base url
 
 ### 1.5 Tracy panel integration
 

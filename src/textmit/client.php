@@ -5,7 +5,7 @@ namespace Textmit;
 /**
  * A client for Textmit - the Indexing Service
  *
- * See http://www.textmit.com/ for more info
+ * See https://www.textmit.com/ for more info
  *
  * Usage:
  *
@@ -42,7 +42,7 @@ defined("TEXTMIT_API_KEY") 								|| define("TEXTMIT_API_KEY","some_secret_key"
 defined("TEXTMIT_DEFAULT_LANGUAGE") 			|| define("TEXTMIT_DEFAULT_LANGUAGE","cs"); // "cs", "en"
 defined("TEXTMIT_DEFAULT_DOCUMENT_TYPE") 	|| define("TEXTMIT_DEFAULT_DOCUMENT_TYPE","article");
 defined("TEXTMIT_STAGE") 									|| define("TEXTMIT_STAGE","auto"); // "auto", "PRODUCTION", "DEVELOPMENT@asterix"
-defined("TEXTMIT_API_BASE_URL") 					|| define("TEXTMIT_API_BASE_URL","http://www.textmit.com/api/");
+defined("TEXTMIT_API_BASE_URL") 					|| define("TEXTMIT_API_BASE_URL","https://www.textmit.com/api/");
 
 class Client {
 
