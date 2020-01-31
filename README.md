@@ -88,7 +88,25 @@ More types of document can be searched at once.
       $object = $item->getObject(); // Article#123, Page#332, ImageGallery#453...
     }
 
-### 1.4 Configuration
+### 1.4 Deleting documents from the index
+
+#### 1.4.1 Deleting a single document
+
+    $textmit->removeDocument(123,"article");
+
+#### 1.4.2 Deleting the whole index
+
+Method ```destroyStage``` deletes all documents of all types in the current stage. One project can have more stages, e.g. "PRODUCTION", "DEVELOPMENT", "TEST"...
+
+    $textmit->destroyStage();
+
+#### 1.4.3 Deleting outdated documents
+
+One technique of indexing a small project (small website) is to index everything once in every day and then remove outdated documents. Outdated documents are those that have not been indexed or re-indexed after the given threshold date.
+
+    $textmit->removeObsoleteDocuments(date("Y-m-d H:i:s",time() - 60 * 60 * 24)); // 1 day
+
+### 1.5 Configuration
 
 There are several configuration constants.
 
@@ -98,7 +116,7 @@ There are several configuration constants.
     define("TEXTMIT_STAGE","auto"); // "DEVELOPMENT", "PRODUCTION", "auto" means auto detection - it leads to "PRODUCTION", "DEVELOPMENT@hostname" or "TEST@hostname"
     define("TEXTMIT_API_BASE_URL","https://www.textmit.com/api/"); // This is default base url
 
-### 1.5 Tracy panel integration
+### 1.6 Tracy panel integration
 
 The Textmit package comes with Panel for easy integration into a popular debugger Tracy (https://packagist.org/packages/tracy/tracy)
 
