@@ -194,6 +194,7 @@ class Client {
 			"type" => null,
 			"types" => array(), // array("article","attachment")
 			"language" => TEXTMIT_DEFAULT_LANGUAGE,
+			"prefix_search" => false, // false - matches whole words; true - matches according to the beginning of words
 			"offset" => 0,
 			"limit" => 100,
 			"auth_token" => $this->_getAuthToken(),
