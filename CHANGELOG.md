@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.3] - 2020-09-11
+------------------
+
+- Added option prefix_search to \Textmit\Client::search(), false by default
+
 [1.2.1] - 2019-10-24
 --------------------
 
