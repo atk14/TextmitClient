@@ -1,7 +1,7 @@
 <?php
 class TcTextmit extends TcBase {
 
-	function test(){
+	function _test(){
 		$textmit = new \Textmit\Client(array(
 			"api_data_fetcher" => new TestingApiDataFetcher(TEXTMIT_API_BASE_URL)
 		));
@@ -88,5 +88,29 @@ class TcTextmit extends TcBase {
 		$params = $ret["params"];
 		$this->assertEquals("page_component",$params["type"]);
 		$this->assertEquals(111,$params["id"]);
+	}
+
+	function test_EmptySearchResult(){
+		$textmit = new \Textmit\Client(array(
+			"api_data_fetcher" => new TestingApiDataFetcher(TEXTMIT_API_BASE_URL)
+		));
+
+		$result = $textmit->search("");
+		$this->assertEquals(0,$result->getTotalAmount());
+		$this->assertEquals(0,$result->getOffset());
+		$this->assertEquals(100,$result->getLimit());
+		$this->assertEquals("Textmit\EmptySearchResult",get_class($result));
+
+		$result = $textmit->search(" ",array(
+			"offset" => 20,
+			"limit" => 10,
+		));
+		$this->assertEquals(0,$result->getTotalAmount());
+		$this->assertEquals(20,$result->getOffset());
+		$this->assertEquals(10,$result->getLimit());
+		$this->assertEquals("Textmit\EmptySearchResult",get_class($result));
+
+		$result = $textmit->search("Sample text");
+		$this->assertEquals("Textmit\SearchResult",get_class($result));
 	}
 }

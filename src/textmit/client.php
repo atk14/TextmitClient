@@ -189,6 +189,8 @@ class Client {
 	 *	$result = $textmit->search("vitamins and minerals",array("type" => "article"));
 	 */
 	function search($query,$params = array()){
+		$query = trim($query);
+
 		$params += array(
 			"stage" => $this->_getStage(),
 			"type" => null,
@@ -199,6 +201,10 @@ class Client {
 			"limit" => 100,
 			"auth_token" => $this->_getAuthToken(),
 		);
+
+		if($query===""){
+			return new EmptySearchResult($params);
+		}
 
 		if($params["type"]){
 			$params["types"][] = $params["type"];
