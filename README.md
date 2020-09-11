@@ -88,6 +88,14 @@ More types of document can be searched at once.
       $object = $item->getObject(); // Article#123, Page#332, ImageGallery#453...
     }
 
+You can use "prefix search" to search without matching whole words.
+
+    // search for documents containing words vita, vitae, vitamine, vitality...
+    $result = $textmit->search("vita",[
+      "prefix_search" => true,
+    ]);
+    
+
 ### 1.4 Deleting documents from the index
 
 #### 1.4.1 Deleting a single document
