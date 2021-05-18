@@ -90,6 +90,22 @@ class TcTextmit extends TcBase {
 		$this->assertEquals(111,$params["id"]);
 	}
 
+	function test_FulltextData(){
+		$pc = new PageComponent(444);
+		$fd = new \Textmit\FulltextData($pc,"cs");
+
+		$fd->setMetaData("key1 key2");
+		$fd->addMetaData("key3");
+
+		$ary = $fd->toArray();
+		$this->assertEquals("key1 key2 key3",$ary["meta_data"]);
+
+		$fd->setMetaData("key4 key5");
+
+		$ary = $fd->toArray();
+		$this->assertEquals("key4 key5",$ary["meta_data"]);
+	}
+
 	function test_EmptySearchResult(){
 		$textmit = new \Textmit\Client(array(
 			"api_data_fetcher" => new TestingApiDataFetcher(TEXTMIT_API_BASE_URL)

@@ -102,6 +102,13 @@ class FulltextData {
 	}
 
 	/**
+	 * $fd->addMetaData("keyword_4");
+	 */
+	function addMetaData($meta_data){
+		$this->meta_data = trim($this->meta_data." ".$meta_data);
+	}
+
+	/**
 	 *	$fd = $article->getFulltextData();
 	 *	foreach($article->getAttachments() as $a){
 	 *		$fd->merge($a->getFulltextData(),array("a" => "c", "b" => "c"));
