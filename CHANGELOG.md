@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.4] - 2021-05-18
+------------------
+
+- Added method \Textmit\FulltextData::addMetaData() 
+
 [1.3] - 2020-09-11
 ------------------
 
