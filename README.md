@@ -1,7 +1,7 @@
 Textmit Client
 ==============
 
-This is a client for indexing and searching engine [Texmit.com](https://www.textmit.com/). The client is written in PHP. It can be very easily integrated into an ATK14 application. 
+This is a client for indexing and searching engine [Texmit.com](https://www.textmit.com/api/). The client is written in PHP. It can be very easily integrated into an ATK14 application. 
 
 ## 1. Basic usage
 
