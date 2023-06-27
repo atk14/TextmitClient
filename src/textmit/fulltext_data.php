@@ -89,8 +89,7 @@ class FulltextData {
 	}
 
 	function addHtml($text,$options = array()){
-		$text = strip_tags($text);
-		$text = html_entity_decode($text);
+		$text = \String4::ToObject($text)->stripHtml()->toString();
 		$this->addText($text,$options);
 	}
 
