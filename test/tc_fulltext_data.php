@@ -22,6 +22,20 @@ class TcFulltextData extends TcBase {
 			"meta_data" => "for_members for_testers",
 		),$ary);
 
+		// addHtml
+
+		$fd = new \Textmit\FulltextData("article","cs");
+		$fd->addHtml("
+			<style>
+				.h3 { font-size: 3em; }
+			</style>
+			<!-- article body -->
+			<h3>Hi there!</h3>
+			<p>It's been a while since we've heard about <em>Ben &amp; Bob</em>...</p>
+		","c");
+		$ary = $fd->toArray();
+		$this->assertEquals("Hi there! It's been a while since we've heard about Ben & Bob...",$ary["c"]);
+
 		//
 
 		$pc = new PageComponent();
