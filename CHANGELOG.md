@@ -3,6 +3,12 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.4.1] - 2023-05-18
+--------------------
+
+* d0f8377 - FulltextData::addHtml() improved
+* 1a353f9 - The package is compatible with PHP>=5.6
+
 [1.4] - 2021-05-18
 ------------------
 
