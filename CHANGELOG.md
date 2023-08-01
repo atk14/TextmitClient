@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.4.2] - 2023-08-01
+--------------------
+
+* 8919cfd - Required atk14/api-data-fetcher ">=1.10.8 <2.0"
+
 [1.4.1] - 2023-05-18
 --------------------
 
