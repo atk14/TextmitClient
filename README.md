@@ -15,6 +15,10 @@ Where do you get the TEXTMIT_API_KEY? Well at the moment the Textmit Engine is c
 
     $textmit = new \Textmit\Client();
 
+    // The socket timeout can be optionally increased
+    $adf = $this->textmit->getApiDataFetcher();
+    $adf->setSocketTimeout(30.0); // seconds
+
     $textmit->addDocument([
       "type" => "article",
       "id" => 123,
@@ -175,6 +179,9 @@ Use the Composer to install the Texmit Client.
 
       function run(){
         $this->textmit = new \Textmit\Client();
+        $adf = $this->textmit->getApiDataFetcher();
+        $adf->setSocketTimeout(30.0);
+
         $this->now = $now = date("Y-m-d H:i:s");
 
         $this->logger->info("using stage: ".$this->textmit->getStage());
