@@ -50,18 +50,35 @@ class Client {
 
 	protected $api_data_fetcher = null;
 
+	protected $api_key;
+	protected $default_language;
+	protected $default_document_type;
+	protected $stage;
+
 	function __construct($options = array()){
 		$options += array(
+			"api_base_url" => TEXTMIT_API_BASE_URL,
+
+			"api_key" => TEXTMIT_API_KEY,
+			"default_language" => TEXTMIT_DEFAULT_LANGUAGE,
+			"default_document_type" => TEXTMIT_DEFAULT_DOCUMENT_TYPE,
+			"stage" => TEXTMIT_STAGE,
+
 			"api_data_fetcher" => null
 		);
 
 		$this->api_data_fetcher = $options["api_data_fetcher"];
 		if(is_null($this->api_data_fetcher)){
-			$this->api_data_fetcher = new \ApiDataFetcher(TEXTMIT_API_BASE_URL,array(
+			$this->api_data_fetcher = new \ApiDataFetcher($options["api_base_url"],array(
 				"lang" => "en", // the language of api messages, not the language of indexed documents
 				"user_agent" => sprintf("TextmitClient/%s ApiDataFetcher/%s UrlFetcher/%s",self::VERSION,\ApiDataFetcher::VERSION,\UrlFetcher::VERSION),
 			));
 		}
+
+		$this->api_key = $options["api_key"];
+		$this->default_language = $options["default_language"];
+		$this->default_document_type = $options["default_document_type"];
+		$this->stage = $options["stage"];
 	}
 
 	/**
@@ -120,7 +137,7 @@ class Client {
 
 		$options += array(
 			"type" => $_default_type,
-			"language" => TEXTMIT_DEFAULT_LANGUAGE,
+			"language" => $this->default_language,
 			"date" => "", // e.g. "2015-08-13 11:01:00"
 			"a" => "",
 			"b" => "",
@@ -195,7 +212,7 @@ class Client {
 			"stage" => $this->_getStage(),
 			"type" => null,
 			"types" => array(), // array("article","attachment")
-			"language" => TEXTMIT_DEFAULT_LANGUAGE,
+			"language" => $this->default_language,
 			"prefix_search" => false, // false - matches whole words; true - matches according to the beginning of words
 			"offset" => 0,
 			"limit" => 100,
@@ -265,23 +282,23 @@ class Client {
 	protected function _getAuthToken(){
 		$time = time();
 		$t = $time - ($time % (60 * 10)); // new auth_token every 10 minutes
-		$ar = explode(".",TEXTMIT_API_KEY);
+		$ar = explode(".",$this->api_key);
 		$id = (int)$ar[0];
-		return $id.".".hash("sha256",TEXTMIT_API_KEY.$t);
+		return $id.".".hash("sha256",$this->api_key.$t);
 	}
 
 	protected function _getStage(){
-		if(TEXTMIT_STAGE=="auto"){
+		if($this->stage=="auto"){
 			if(PRODUCTION){ return "PRODUCTION"; }
 			$stage = DEVELOPMENT ? "DEVELOPMENT" : "TEST";
 			$hostname = gethostname();
 			return "$stage@$hostname"; // DEVELOPMENT@asterix
 		}
-		return TEXTMIT_STAGE;
+		return $this->stage;
 	}
 
 	protected function _determineDocumentTypeAndId($id){
-		$type = TEXTMIT_DEFAULT_DOCUMENT_TYPE;
+		$type = $this->default_document_type;
 
 		if(is_object($id)){
 			$type = \String4::ToObject(get_class($id))->underscore()->toString(); // "PageComponent" -> "page_component"
