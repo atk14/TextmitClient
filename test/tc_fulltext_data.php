@@ -15,6 +15,7 @@ class TcFulltextData extends TcBase {
 			"type" => "article",
 			"language" => "cs",
 			"date" => "",
+			"rank_multiplier" => 1.0,
 			"a" => "",
 			"b" => "Article Title Example perex",
 			"c" => "Body, body, body",
@@ -41,6 +42,7 @@ class TcFulltextData extends TcBase {
 		$pc = new PageComponent();
 		$fd = new \Textmit\FulltextData($pc);
 		$fd->addText("Sample page content");
+		$fd->setRankMultiplier(2.3);
 
 		$ary = $fd->toArray();
 		$this->assertEquals(array (
@@ -48,6 +50,7 @@ class TcFulltextData extends TcBase {
 			"type" => "page_component",
 			"language" => "en", // TEXTMIT_DEFAULT_LANGUAGE
 			"date" => "",
+			"rank_multiplier" => 2.3,
 			"a" => "",
 			"b" => "",
 			"c" => "Sample page content",
