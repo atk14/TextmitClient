@@ -139,6 +139,7 @@ class Client {
 			"type" => $_default_type,
 			"language" => $this->default_language,
 			"date" => "", // e.g. "2015-08-13 11:01:00"
+			"rank_multiplier" => 1.0,
 			"a" => "",
 			"b" => "",
 			"c" => "",

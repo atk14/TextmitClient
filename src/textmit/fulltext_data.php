@@ -38,6 +38,7 @@ class FulltextData {
 	protected $c = "";
 	protected $d = "";
 	protected $meta_data = "";
+	protected $rank_multiplier = 1.0;
 
 	/**
 	 * Constructor
@@ -131,12 +132,17 @@ class FulltextData {
 		$this->date = $date;
 	}
 
+	function setRankMultiplier(float $rank){
+		$this->rank_multiplier = $rank;
+	}
+
 	function toArray(){
 		return array(
 			"id" => $this->id,
 			"type" => $this->type,
 			"language" => $this->language,
 			"date" => $this->date,
+			"rank_multiplier" => $this->rank_multiplier,
 			"a" => $this->a,
 			"b" => $this->b,
 			"c" => $this->c,
