@@ -132,7 +132,8 @@ class FulltextData {
 		$this->date = $date;
 	}
 
-	function setRankMultiplier(float $rank){
+	function setRankMultiplier($rank){
+		$rank = (float)$rank;
 		$this->rank_multiplier = $rank;
 	}
 
