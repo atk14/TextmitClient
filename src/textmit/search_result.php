@@ -14,6 +14,7 @@ class SearchResult {
 	function getRecordsCount(){ return $this->getTotalAmount(); }
 	function getOffset(){ return $this->data["offset"]; }
 	function getLimit(){ return $this->data["limit"]; }
+	function getPageSize(){ return $this->getLimit(); }
 	function getRecordsDisplayed(){ return sizeof($this->data["records"]); }
 	function atBeginning(){ return $this->getOffset()<=0; }
 
