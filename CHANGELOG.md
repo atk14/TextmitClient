@@ -3,6 +3,13 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.4.3] - 2024-05-06
+--------------------
+
+* d4b9212 - If $query is longer than 200 characters, EmptySearchResult is returned
+* 15a75cd - Adding the rank_multiplier option to document creation
+* ab22b81 - Added more options to the Textmit\Client's constructor
+
 [1.4.2] - 2023-08-01
 --------------------
 
