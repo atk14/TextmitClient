@@ -128,5 +128,11 @@ class TcTextmit extends TcBase {
 
 		$result = $textmit->search("Sample text");
 		$this->assertEquals("Textmit\SearchResult",get_class($result));
+
+		$result = $textmit->search(str_repeat("Sample Text", 200)); // query longer than 200 chars
+		$this->assertEquals(0,$result->getTotalAmount());
+		$this->assertEquals(0,$result->getOffset());
+		$this->assertEquals(100,$result->getLimit());
+		$this->assertEquals("Textmit\EmptySearchResult",get_class($result));
 	}
 }
