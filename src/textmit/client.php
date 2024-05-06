@@ -208,6 +208,7 @@ class Client {
 	 */
 	function search($query,$params = array()){
 		$query = trim($query);
+		$query = preg_replace('/\s+/s',' ',$query);
 
 		$params += array(
 			"stage" => $this->_getStage(),
@@ -221,6 +222,10 @@ class Client {
 		);
 
 		if($query===""){
+			return new EmptySearchResult($params);
+		}
+
+		if(mb_strlen($query)>200){
 			return new EmptySearchResult($params);
 		}
 
