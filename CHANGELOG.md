@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.4.4] - 2026-06-17
+--------------------
+
+* 7db471f - Several retry attempts in the Textmit\Client::addDocument() method in the event of an error
+
 [1.4.3] - 2024-05-06
 --------------------
 
