@@ -1,6 +1,8 @@
 Textmit Client
 ==============
 
+[![Tests](https://github.com/atk14/TextmitClient/actions/workflows/tests.yml/badge.svg)](https://github.com/atk14/TextmitClient/actions/workflows/tests.yml)
+
 This is a client for indexing and searching engine [Texmit.com](https://www.textmit.com/api/). The client is written in PHP. It can be very easily integrated into an ATK14 application. 
 
 ## 1. Basic usage
