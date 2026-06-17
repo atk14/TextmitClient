@@ -152,7 +152,22 @@ class Client {
 		$options["auth_token"] = $this->_getAuthToken();
 
 		$apf = $this->getApiDataFetcher();
-		$data = $apf->post("documents/create_new",$options);
+
+		$max_attempts = 5;
+		$attempts = 1;
+		while(1){
+			try {
+				$data = $apf->post("documents/create_new",$options);
+			} catch(\Exception $e) {
+				$attempts++;
+				if($attempts>$max_attempts){
+					throw $e;
+				}
+				sleep(2 + pow(2,$attempts));
+				continue;
+			}
+			break;
+		}
 		return $data;
 	}
 
