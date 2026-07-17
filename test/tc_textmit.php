@@ -55,7 +55,7 @@ class TcTextmit extends TcBase {
 			$textmit->addDocument(array("id" => "", "c" => "Sample text"));
 			$this->fail();
 		}catch(Exception $e){
-			$this->assertContains("id is missing",$e->getMessage());
+			$this->assertStringContains("id is missing",$e->getMessage());
 		}
 
 		// using FulltextData
