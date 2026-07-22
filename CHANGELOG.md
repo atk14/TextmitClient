@@ -3,6 +3,11 @@ Change Log
 
 All notable changes to this project will be documented in this file.
 
+[1.4.5] - 2026-07-22
+--------------------
+
+* 4e603fe - Added new method \Textmit\SearchResult::hardLimitReached()
+
 [1.4.4] - 2026-06-17
 --------------------
 
