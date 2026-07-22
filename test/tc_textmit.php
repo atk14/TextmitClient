@@ -113,6 +113,7 @@ class TcTextmit extends TcBase {
 
 		$result = $textmit->search("");
 		$this->assertEquals(0,$result->getTotalAmount());
+		$this->assertEquals(false,$result->hardLimitReached());
 		$this->assertEquals(0,$result->getOffset());
 		$this->assertEquals(100,$result->getLimit());
 		$this->assertEquals("Textmit\EmptySearchResult",get_class($result));
@@ -122,6 +123,7 @@ class TcTextmit extends TcBase {
 			"limit" => 10,
 		));
 		$this->assertEquals(0,$result->getTotalAmount());
+		$this->assertEquals(false,$result->hardLimitReached());
 		$this->assertEquals(20,$result->getOffset());
 		$this->assertEquals(10,$result->getLimit());
 		$this->assertEquals("Textmit\EmptySearchResult",get_class($result));
@@ -131,6 +133,7 @@ class TcTextmit extends TcBase {
 
 		$result = $textmit->search(str_repeat("Sample Text", 200)); // query longer than 200 chars
 		$this->assertEquals(0,$result->getTotalAmount());
+		$this->assertEquals(false,$result->hardLimitReached());
 		$this->assertEquals(0,$result->getOffset());
 		$this->assertEquals(100,$result->getLimit());
 		$this->assertEquals("Textmit\EmptySearchResult",get_class($result));

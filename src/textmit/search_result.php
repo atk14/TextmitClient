@@ -7,10 +7,14 @@ class SearchResult {
 	protected $data;
 
 	function __construct($data){
+		$data += [
+			"hard_limit_reached" => false,
+		];
 		$this->data = $data;
 	}
 
-	function getTotalAmount(){ return $this->data["total_amount"]; } 
+	function getTotalAmount(){ return $this->data["total_amount"]; }
+	function hardLimitReached(){ return $this->data["hard_limit_reached"]; }
 	function getRecordsCount(){ return $this->getTotalAmount(); }
 	function getOffset(){ return $this->data["offset"]; }
 	function getLimit(){ return $this->data["limit"]; }
