@@ -39,6 +39,7 @@ class FulltextData {
 	protected $d = "";
 	protected $meta_data = "";
 	protected $rank_multiplier = 1.0;
+	protected $attrs = [];
 
 	/**
 	 * Constructor
@@ -137,6 +138,10 @@ class FulltextData {
 		$this->rank_multiplier = $rank;
 	}
 
+	function setAttrs($attrs){
+		$this->attrs = $attrs;
+	}
+
 	function toArray(){
 		return array(
 			"id" => $this->id,
@@ -149,6 +154,7 @@ class FulltextData {
 			"c" => $this->c,
 			"d" => $this->d,
 			"meta_data" => $this->meta_data,
+			"attrs" => $this->attrs,
 		);
 	}
 }

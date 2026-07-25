@@ -145,11 +145,16 @@ class Client {
 			"c" => "",
 			"d" => "",
 			"meta_data" => "",
+			"attrs" => "",
 		);
 
 		$options["id"] = $id;
 		$options["stage"] = $this->_getStage();
 		$options["auth_token"] = $this->_getAuthToken();
+
+		if(is_array($options["attrs"])){
+			$options["attrs"] = sizeof($options["attrs"])>1 ? json_encode($options["attrs"]) : "";
+		}
 
 		$apf = $this->getApiDataFetcher();
 

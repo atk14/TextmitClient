@@ -57,4 +57,10 @@ class SearchResult {
 		}
 		return $out;
 	}
+
+	function getFacets(){
+		if(isset($this->data["facets"])){
+			return $this->data["facets"];
+		}
+	}
 }
