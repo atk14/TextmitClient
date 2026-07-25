@@ -21,6 +21,7 @@ class TcFulltextData extends TcBase {
 			"c" => "Body, body, body",
 			"d" => "",
 			"meta_data" => "for_members for_testers",
+			"attrs" => [],
 		),$ary);
 
 		// addHtml
@@ -56,6 +57,7 @@ class TcFulltextData extends TcBase {
 			"c" => "Sample page content",
 			"d" => "",
 			"meta_data" => "",
+			"attrs" => [],
 		),$ary);
 	}
 }
