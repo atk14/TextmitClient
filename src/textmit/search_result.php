@@ -14,6 +14,12 @@ class SearchResult {
 	}
 
 	function getTotalAmount(){ return $this->data["total_amount"]; }
+	function getTotalAmountUnfiltered(){
+		if(!isset($this->data["total_amount_unfiltered"])){
+			return $this->getTotalAmount();
+		}
+		return $this->data["total_amount_unfiltered"];
+	}
 	function hardLimitReached(){ return $this->data["hard_limit_reached"]; }
 	function getRecordsCount(){ return $this->getTotalAmount(); }
 	function getOffset(){ return $this->data["offset"]; }
